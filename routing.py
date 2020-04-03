@@ -65,6 +65,8 @@ DIST_TO_DESTINATION = 8
 # calculate weights from current location to furthest node using params in user_priorities and params in 
 # corresponding user's graph json
 
+# OUTPUT
+# Ordered List of node ids representing path till chosen node (closer to destination)
 
 # for reference
 
