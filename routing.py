@@ -1,11 +1,70 @@
 from search import *
 
-# PARAMETERS
-DIST_FROM_CURR_LOC = 10 # upper bound for retrieving nodes, so as to constrain graph
+# HYPER PARAMETERS
+DIST_FROM_PREV_LOC = 12 # upper bound for retrieving nodes, so as to constrain graph
+
+# COMPUTED/GIVEN PARAMETERS
+DIST_START_TO_DESTINATION = 20
+DIST_TO_DESTINATION = 8
 
 # STEPS
+# create graph with only DIST_FROM_PREV_LOC or fewer metres from previous location
+# AND DIST_TO_DESTINATION/DIST_FROM_START < 1
 
-# create graph with only nodes at DIST_FROM_CURR_LOC
+# JSON INPUT FORMAT
+# graph_{user_id}.json
+"""
+{
+    "nodes": 
+    {
+        {node_id}:
+            {
+                "id": _
+                "location": (lat, long),
+            }
+    }
+    "edges": 
+    {
+        {edge_id}:
+        {
+            "id": _
+            "source": {node_id},
+            "dest": {node_id},
+            "mode": Car/Bus/Bike/etc,
+            "params":
+            {
+                //depend on mode, separate edge for each mode
+                "estimated_duration": _ mins, 
+                "pollution": _,
+                :
+                :
+            }
+        }
+    }
+}
+"""
+# user_priorities.json
+"""
+{
+    {user_id}: 
+    {
+        "id": _,
+        "current_location": (lat, long),
+        "params": {
+                "pollution": _,
+                :
+                :
+            }
+    
+    }
+}
+"""
+
+# ALGORITHMS
+# => ITERATIVE DEEPENING SEARCH
+# calculate weights from current location to furthest node using params in user_priorities and params in 
+# corresponding user's graph json
+
 
 # for reference
 
