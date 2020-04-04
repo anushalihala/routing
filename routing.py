@@ -12,38 +12,7 @@ DIST_TO_DESTINATION = 8
 # AND DIST_TO_DESTINATION/DIST_FROM_START < 1
 
 # JSON INPUT FORMAT
-# graph_{user_id}.json
-"""
-{
-    "nodes": 
-    {
-        {node_id}:
-            {
-                "id": _
-                "location": (lat, long),
-            }
-    }
-    "edges": 
-    {
-        {edge_id}:
-        {
-            "id": _
-            "source": {node_id},
-            "dest": {node_id},
-            "mode": Car/Bus/Bike/etc,
-            "params":
-            {
-                //depend on mode, separate edge for each mode
-                "estimated_duration": _ mins, 
-                "pollution": _,
-                :
-                :
-            }
-        }
-    }
-}
-"""
-# user_priorities.json
+# can store in Firebase database/Firestore
 """
 {
     {user_id}: 
@@ -54,13 +23,40 @@ DIST_TO_DESTINATION = 8
                 "pollution": _,
                 :
                 :
+            },
+        "preferred_mode": Car/Bus/Bike/Any
+        "nodes": 
+        {
+            {node_id}:
+                {
+                    "id": _
+                    "location": (lat, long),
+                }
+        }
+        "edges": 
+        {
+            {edge_id}:
+            {
+                "id": _
+                "source": {node_id},
+                "dest": {node_id},
+                "mode": Car/Bus/Bike/etc,
+                "params":
+                {
+                    //depend on mode, separate edge for each mode
+                    "estimated_duration": _ mins, 
+                    "pollution": _,
+                    :
+                    :
+                }
             }
-    
+        }
     }
 }
 """
 
 # ALGORITHMS
+# if preferred_mode not ANY -> can use default/OSRM?
 # => ITERATIVE DEEPENING SEARCH
 # calculate weights from current location to furthest node using params in user_priorities and params in 
 # corresponding user's graph json
