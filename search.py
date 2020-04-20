@@ -296,6 +296,8 @@ def depth_limited_search(problem, limit=50):
     """[Figure 3.17]"""
 
     def recursive_dls(node, problem, limit):
+        # print(node, problem, limit)
+        
         if problem.goal_test(node.state):
             return node
         elif limit == 0:

@@ -1,4 +1,48 @@
 from search import *
+from getgraph import *
+import json
+
+with open("bikes.json", "r") as fh:
+    json_string = fh.read()
+    
+json_obj = json.loads(json_string)
+(nodes, edges) = get_graph_from_json_string(json_obj, mode="bike")
+
+# # print(nodes)
+# # print(edges)
+
+bike_graph = UndirectedGraph(edges)
+bike_graph.locations = nodes
+
+bike_problem = GraphProblem("83", "21", bike_graph)
+
+solution = iterative_deepening_search(bike_problem).solution()
+print(solution)
+
+
+
+
+with open("buses.json", "r", encoding="utf8") as fh:
+    json_string = fh.read()
+    
+json_obj = json.loads(json_string)
+(nodes, edges) = get_graph_from_json_string(json_obj["results"], mode="bus")
+
+with open("bus_objs.pickle", "wb") as fh:
+    pickle.dump((nodes, edges), fh)
+
+# print(nodes)
+# print(edges)
+
+# bike_graph = UndirectedGraph(edges)
+# bike_graph.locations = nodes
+
+# bike_problem = GraphProblem("83", "21", bike_graph)
+
+# solution = iterative_deepening_search(bike_problem).solution()
+# print(solution)
+
+
 
 # HYPER PARAMETERS
 DIST_FROM_PREV_LOC = 12 # upper bound for retrieving nodes, so as to constrain graph
@@ -18,6 +62,8 @@ DIST_TO_DESTINATION = 8
     {user_id}: 
     {
         "id": _,
+        "start":_,
+        "destination":_,
         "current_location": (lat, long),
         "params": {
                 "pollution": _,
@@ -56,7 +102,7 @@ DIST_TO_DESTINATION = 8
 """
 
 # ALGORITHMS
-# if preferred_mode not ANY -> can use default/OSRM?
+# if preferred_mode not ANY -> use default/OSRM?
 # => ITERATIVE DEEPENING SEARCH
 # calculate weights from current location to furthest node using params in user_priorities and params in 
 # corresponding user's graph json
@@ -95,3 +141,18 @@ romania_map2.locations = dict(
 # basic testing
 
 romania_problem = GraphProblem('Arad', 'Bucharest', romania_map2)
+solution = iterative_deepening_search(romania_problem).solution()
+# print(solution)
+
+
+australia_map = UndirectedGraph(dict(
+    T=dict(),
+    SA=dict(WA=1, NT=1, Q=1, NSW=1, V=1),
+    NT=dict(WA=1, Q=1),
+    NSW=dict(Q=1, V=1)))
+australia_map.locations = dict(WA=(120, 24), NT=(135, 20), SA=(135, 30),
+                               Q=(145, 20), NSW=(145, 32), T=(145, 42),
+                               V=(145, 37))
+australia_prob = GraphProblem("SA", "WA", australia_map)
+solution = iterative_deepening_search(australia_prob).solution()
+print(solution)
