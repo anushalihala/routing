@@ -19,7 +19,7 @@ def get_route(start, destination, mode, file, is_pickle=False):
     problem = GraphProblem(start, destination, graph)
     solution = iterative_deepening_search(problem).solution()
     
-    return solution
+    return json.dumps(solution)
     
     
 soln = get_route("83", "21", "bike", "bikes.json")
